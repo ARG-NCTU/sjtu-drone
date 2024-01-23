@@ -40,13 +40,18 @@ namespace gazebo
     ROS_INFO("The drone plugin is loading!");
 
     // load parameters
-    cmd_normal_topic_ = "/sjtu_drone/cmd_vel";
-    takeoff_topic_ = "/sjtu_drone/takeoff";
-    land_topic_ = "/sjtu_drone/land";
-    reset_topic_ = "/sjtu_drone/reset";
-    posctrl_topic_ = "/sjtu_drone/posctrl";
-    gt_topic_ = "/sjtu_drone/gt_pose";
-    switch_mode_topic_ = "/sjtu_drone/vel_mode";
+    if (!_sdf->HasElement("robotNamespace"))
+      namespace_ = "sjtu_drone";
+    else
+      namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
+
+    cmd_normal_topic_ = "/" + namespace_ + "/cmd_vel";
+    takeoff_topic_ = "/" + namespace_ + "/takeoff";
+    land_topic_ = "/" + namespace_ + "/land";
+    reset_topic_ = "/" + namespace_ + "/reset";
+    posctrl_topic_ = "/" + namespace_ + "/posctrl";
+    gt_topic_ = "/" + namespace_ + "/gt_pose";
+    switch_mode_topic_ = "/" + namespace_ + "/vel_mode";
 
     if (!_sdf->HasElement("imuTopic"))
       imu_topic_.clear();
@@ -176,11 +181,11 @@ namespace gazebo
 
     if (!gt_topic_.empty())
     {
-      pub_gt_pose_ = node_handle_->advertise<geometry_msgs::Pose>("/sjtu_drone/gt_pose", 1024);
+      pub_gt_pose_ = node_handle_->advertise<geometry_msgs::Pose>("/" + namespace_ + "/gt_pose", 1024);
     }
 
-    pub_gt_vec_ = node_handle_->advertise<geometry_msgs::Twist>("/sjtu_drone/gt_vel", 1024);
-    pub_gt_acc_ = node_handle_->advertise<geometry_msgs::Twist>("/sjtu_drone/gt_acc", 1024);
+    pub_gt_vec_ = node_handle_->advertise<geometry_msgs::Twist>("/" + namespace_ + "/gt_vel", 1024);
+    pub_gt_acc_ = node_handle_->advertise<geometry_msgs::Twist>("/" + namespace_ + "/gt_acc", 1024);
 
     if (!switch_mode_topic_.empty())
     {

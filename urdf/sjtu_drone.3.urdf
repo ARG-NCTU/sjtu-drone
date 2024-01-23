@@ -1,17 +1,11 @@
 <?xml version="1.0" ?>
-<robot name="drone">
-  <link name="drone/base_link">
+<robot name="drone3">
+  <link name="drone3/base_link">
     <inertial>
       <mass value="1.477"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="0.1152" ixy="0" ixz="0" iyy="0.1152" iyz="0" izz="0.218"/>
     </inertial>
-    <collision name="sjtu_drone__collision">
-      <origin rpy="0 0 0" xyz="0   0   0.04"/>
-      <geometry>
-        <mesh filename="package://sjtu_drone/meshes/quadrotor_4.stl"/>
-      </geometry>
-    </collision>
     <visual name="sjtu_drone__visual">
       <origin rpy="0 0 0" xyz="0   0   0.04"/>
       <geometry>
@@ -20,7 +14,7 @@
     </visual>
   </link>
 
-  <link name="drone/imu_link">
+  <link name="drone3/imu_link">
     <inertial>
       <mass value="0.01"/>
       <!-- Assume a small mass for the IMU -->
@@ -31,16 +25,16 @@
   </link>
 
   <joint name="imu_joint" type="fixed">
-    <parent link="drone/base_link"/>
-    <child link="drone/imu_link"/>
+    <parent link="drone3/base_link"/>
+    <child link="drone3/imu_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
 
   <gazebo>
     <plugin name='simple_drone' filename='libplugin_drone.so'>
-      <robotNamespace>drone</robotNamespace>
-      <imuTopic>drone/imu</imuTopic>
-      <bodyName>drone/base_link</bodyName>
+      <robotNamespace>drone3</robotNamespace>
+      <imuTopic>drone3/imu</imuTopic>
+      <bodyName>drone3/base_link</bodyName>
       <maxForce>600</maxForce>
       <motionSmallNoise>0.0</motionSmallNoise>
       <motionDriftNoise>0.0</motionDriftNoise>

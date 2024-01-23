@@ -1,0 +1,88 @@
+<launch>
+    <arg name="num" default="4" />
+
+    <group ns="drone0" if="$(eval arg('num') > 0)">
+        <param name="robot_description"
+            command="cat '$(find sjtu_drone)/urdf/sjtu_drone.0.urdf'" />
+
+        <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -param robot_description -model drone0 -x 1 -y 0 -z 0"
+            respawn="false" output="log" />
+
+        <node pkg="vrx_gazebo" type="model_state_to_tf" name="model_state_to_tf">
+            <param name="model_name" value="drone0" />
+            <param name="model_tf_suffix" value="base_link" />
+            <param name="broadcast_rate" value="50" />
+        </node>
+
+        <node pkg="vrx_gazebo" type="model_state_to_pose_stamped"
+            name="model_state_to_pose_stamped" output="log">
+            <param name="model_name" value="drone0" />
+            <param name="publish_rate" value="50" />
+        </node>
+    </group>
+
+    <group ns="drone1" if="$(eval arg('num') > 1)">
+        <param name="robot_description"
+            command="cat '$(find sjtu_drone)/urdf/sjtu_drone.1.urdf'" />
+
+        <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -param robot_description -model drone1 -x 0 -y 1 -z 0"
+            respawn="false" output="log" />
+
+        <node pkg="vrx_gazebo" type="model_state_to_tf" name="model_state_to_tf">
+            <param name="model_name" value="drone1" />
+            <param name="model_tf_suffix" value="base_link" />
+            <param name="broadcast_rate" value="50" />
+        </node>
+
+        <node pkg="vrx_gazebo" type="model_state_to_pose_stamped"
+            name="model_state_to_pose_stamped" output="log">
+            <param name="model_name" value="drone1" />
+            <param name="publish_rate" value="50" />
+        </node>
+    </group>
+
+    <group ns="drone2" if="$(eval arg('num') > 2)">
+        <param name="robot_description"
+            command="cat '$(find sjtu_drone)/urdf/sjtu_drone.2.urdf'" />
+
+        <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -param robot_description -model drone2 -x -1 -y 0 -z 0"
+            respawn="false" output="log" />
+
+        <node pkg="vrx_gazebo" type="model_state_to_tf" name="model_state_to_tf">
+            <param name="model_name" value="drone2" />
+            <param name="model_tf_suffix" value="base_link" />
+            <param name="broadcast_rate" value="50" />
+        </node>
+
+        <node pkg="vrx_gazebo" type="model_state_to_pose_stamped"
+            name="model_state_to_pose_stamped" output="log">
+            <param name="model_name" value="drone2" />
+            <param name="publish_rate" value="50" />
+        </node>
+    </group>
+
+    <group ns="drone3" if="$(eval arg('num') > 3)">
+        <param name="robot_description"
+            command="cat '$(find sjtu_drone)/urdf/sjtu_drone.3.urdf'" />
+
+        <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -param robot_description -model drone3 -x 0 -y -1 -z 0"
+            respawn="false" output="log" />
+
+        <node pkg="vrx_gazebo" type="model_state_to_tf" name="model_state_to_tf">
+            <param name="model_name" value="drone3" />
+            <param name="model_tf_suffix" value="base_link" />
+            <param name="broadcast_rate" value="50" />
+        </node>
+
+        <node pkg="vrx_gazebo" type="model_state_to_pose_stamped"
+            name="model_state_to_pose_stamped" output="log">
+            <param name="model_name" value="drone3" />
+            <param name="publish_rate" value="50" />
+        </node>
+    </group>
+
+</launch>
