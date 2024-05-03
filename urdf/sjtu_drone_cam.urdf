@@ -173,20 +173,20 @@
     </plugin>
   </gazebo> -->
 
-  <link name="drone/middle_camera_link">
-    <visual name="middle_camera_visual">
+  <link name="drone/downward_camera_link">
+    <visual name="downward_camera_visual">
       <origin rpy="0 0 1.57079632679" xyz="-0.033 0 0" />
       <geometry>
         <mesh filename="package://vrx_gazebo/models/mono_camera/mesh/mono_camera.dae" />
       </geometry>
     </visual>
-    <collision name="middle_camera_lens_collision">
+    <collision name="downward_camera_lens_collision">
       <origin rpy="0 1.57079632679 0" xyz="0.018 0 0" />
       <geometry>
         <cylinder length="0.042" radius="0.015" />
       </geometry>
     </collision>
-    <collision name="middle_camera_box_collision">
+    <collision name="downward_camera_box_collision">
       <origin rpy="0 0 0" xyz="-0.0205 0 0" />
       <geometry>
         <box size="0.036 0.03 0.03" />
@@ -198,13 +198,13 @@
       <inertia ixx="0.0000450" ixy="0" ixz="0" iyy="0.0001746" iyz="0" izz="0.0001746" />
     </inertial>
   </link>
-  <link name="drone/middle_camera_link_optical">
+  <link name="drone/downward_camera_link_optical">
   </link>
 
-  <gazebo reference="drone/middle_camera_link">
-    <sensor name="middle_camera_sensor" type="depth">
+  <gazebo reference="drone/downward_camera_link">
+    <sensor name="downward_camera_sensor" type="depth">
       <update_rate>30.0</update_rate>
-      <camera name="middle_camera_camera">
+      <camera name="downward_camera_camera">
         <horizontal_fov>1.570796</horizontal_fov>
         <vertical_fov>1.04872</vertical_fov>
         <image>
@@ -225,17 +225,17 @@
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_plugin_middle_camera">
+      <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_plugin_downward_camera">
         <baseline>0.2</baseline>
         <alwaysOn>true</alwaysOn>
         <updateRate>1.0</updateRate>
-        <cameraName>drone/sensors/cameras/middle_camera</cameraName>
+        <cameraName>drone/sensors/cameras/downward_camera</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <depthImageTopicName>depth/image_raw</depthImageTopicName>
         <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
         <pointCloudTopicName>depth/points</pointCloudTopicName>
-        <frameName>drone/middle_camera_link_optical</frameName>
+        <frameName>drone/downward_camera_link_optical</frameName>
         <pointCloudCutoff>0.5</pointCloudCutoff>
         <pointCloudCutoffMax>25.0</pointCloudCutoffMax>
         <hackBaseline>0.07</hackBaseline>
@@ -495,19 +495,19 @@
   </gazebo>
 
   <!-- TODO -->
-  <joint name="drone/base_to_middle_camera_joint" type="fixed">
+  <joint name="drone/base_to_downward_camera_joint" type="fixed">
     <origin rpy="0 1.57079632679 0" xyz="0 0 0" />
     <parent link="drone/base_link" />
-    <child link="drone/middle_camera_link" />
+    <child link="drone/downward_camera_link" />
   </joint>
-  <joint name="drone/middle_camera_to_middle_camera_link_optical_joint" type="fixed">
+  <joint name="drone/downward_camera_to_downward_camera_link_optical_joint" type="fixed">
     <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0" />
-    <parent link="drone/middle_camera_link" />
-    <child link="drone/middle_camera_link_optical" />
+    <parent link="drone/downward_camera_link" />
+    <child link="drone/downward_camera_link_optical" />
   </joint>
 
   <joint name="drone/base_to_front_camera_joint" type="fixed">
-    <origin rpy="0 0.24033181 0" xyz="0.08 0 0" />
+    <origin rpy="0 0.366519143 0" xyz="0.14227 0 0" />
     <parent link="drone/base_link" />
     <child link="drone/front_camera_link" />
   </joint>
@@ -518,7 +518,7 @@
   </joint>
 
   <joint name="drone/base_to_left_camera_joint" type="fixed">
-    <origin rpy="0 0.24033181 -0.48393994" xyz="0.04 -0.04 0" />
+    <origin rpy="0 0.366519143 0.968657735" xyz="0.09942 0.10153 0" />
     <parent link="drone/base_link" />
     <child link="drone/left_camera_link" />
   </joint>
@@ -529,7 +529,7 @@
   </joint>
 
   <joint name="drone/base_to_right_camera_joint" type="fixed">
-    <origin rpy="0 0.24033181 0.48393994" xyz="0.04 0.04 0" />
+    <origin rpy="0 0.366519143 -0.968657735" xyz="0.09942 -0.10153 0" />
     <parent link="drone/base_link" />
     <child link="drone/right_camera_link" />
   </joint>
